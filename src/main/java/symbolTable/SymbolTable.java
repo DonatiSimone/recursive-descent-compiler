@@ -36,14 +36,6 @@ public class SymbolTable {
 		public Attributes(LangType tipo) {
 			this.tipo = tipo;
 		}
-		
-		/*
-		 * Crea attributi con tipo e registro.
-		 */
-		public Attributes(LangType tipo, char registro) {
-			this.tipo = tipo;
-			this.registro = registro;
-		}
 
 		public LangType getType() {
 			return tipo;
@@ -53,6 +45,18 @@ public class SymbolTable {
 			return registro;
 		}
 		
+		/*
+		 * Associa il registro dc all'identificatore.
+		 *
+		 * Durante il type checking gli attributi vengono
+		 * creati con le sole informazioni di tipo.
+		 * In fase di code generation il registro viene
+		 * assegnato successivamente completando la stessa
+		 * entry della Symbol Table.
+		 */
+		public void setRegistro(char registro) {
+		    this.registro = registro;
+		}
 		
 	}
 	
@@ -80,6 +84,7 @@ public class SymbolTable {
         table.put(id, entry);
         return true;
     }
+    
 
     /*
      * Cerca un identificatore nella Symbol Table
@@ -88,7 +93,8 @@ public class SymbolTable {
     public static Attributes lookup(String id) {
         return table.get(id);
     }
-
+    
+    
     /*
      * Restituisce il numero di simboli presenti.
      */

@@ -20,7 +20,7 @@ public class SyntacticException extends Exception{
 
 	/*
 	 * Crea una eccezione sintattica
-	 * con messaggio personalizzato.
+	 * con message.
 	 */
 	public SyntacticException(String message) {
 		super(message);
@@ -35,7 +35,7 @@ public class SyntacticException extends Exception{
 	}
 	
 	/*
-	 * Crea un messaggio di errore sintattico
+	 * Crea una eccezione sintattica
 	 * indicando:
 	 * - riga dell'errore
 	 * - token atteso

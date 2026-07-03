@@ -9,7 +9,7 @@ import typechecking.TypeDescriptor;
 /*
  * Nodo radice del programma.
  * Contiene la lista di dichiarazioni e statement
- * presenti nel sorgente
+ * che compongono il programma.
  */
 public class NodeProgram extends NodeAST{
 	

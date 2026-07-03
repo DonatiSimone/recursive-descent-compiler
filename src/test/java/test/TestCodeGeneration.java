@@ -1,8 +1,9 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.FileNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,10 +35,9 @@ public class TestCodeGeneration {
         );
 
         NodeProgram program = parser.parse();
-
+        program.calcResType(); 
         String code = program.calcCodice();
 
-        //System.out.print(code);
         
         assertEquals(
             "1 6 / sa la p P ",
@@ -58,13 +58,12 @@ public class TestCodeGeneration {
         );
 
         NodeProgram program = parser.parse();
-
+        program.calcResType(); 
         String code = program.calcCodice();
-
-        //System.out.print(code);
+        
         
         assertEquals(
-            "0 sa la 1 + sa 6 sb 1.0 6 / la lb / + sc la p P lb p P lc p P ",
+            "0 sa la 1 + sa 6 sb 1.0 6 5 k / 0 k la lb / + sc la p P lb p P lc p P ",
             code
         );
 
@@ -82,13 +81,12 @@ public class TestCodeGeneration {
         );
 
         NodeProgram program = parser.parse();
-
+        program.calcResType(); 
         String code = program.calcCodice();
 
-        // System.out.print(code);
         
         assertEquals(
-            "5 3 + sa la 0.5 + sb la p P lb 4 / sb lb p P lb 1 - sc lc lb * sc lc p P ",
+            "5 3 + sa la 0.5 + sb la p P lb 4 5 k / 0 k sb lb p P lb 1 - sc lc lb * sc lc p P ",
             code
         );
 
@@ -106,11 +104,10 @@ public class TestCodeGeneration {
         );
 
         NodeProgram program = parser.parse();
-
+        program.calcResType();
         String code = program.calcCodice();
 
-        //System.out.print(code);
-        
+
         assertEquals(
                 "6 2 / sa la p P ",
                 code

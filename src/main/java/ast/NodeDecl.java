@@ -59,8 +59,7 @@ public class NodeDecl extends NodeDecSt{
 	        );
 	    }
 
-	    // no inizializzazione
-
+	    // caso: int a; (dichiarazione senza inizializzazione)
 	    if(init == null) {
 	        return new TypeDescriptor(TipoTD.OK);
 	    }
@@ -91,6 +90,9 @@ public class NodeDecl extends NodeDecSt{
 
 	@Override
 	public String calcCodice() {
+		
+		Attributes attr =
+			    SymbolTable.lookup(id.getName());
 
 	    char reg =
 	        Registri.newRegister();
@@ -99,12 +101,18 @@ public class NodeDecl extends NodeDecSt{
 	        log = "Registri esauriti";
 	        return "";
 	    }
-
-	    SymbolTable.enter(
-	        id.getName(),
-	        new Attributes(type, reg)
-	    );
-
+	    
+	    
+	    /*
+	     * Durante il type checking la variabile viene inserita
+	     * nella Symbol Table con il solo tipo.
+	     *
+	     * In code generation la stessa entry viene completata
+	     * associando il registro dc assegnato.
+	     */
+	    attr.setRegistro(reg);
+	    
+	    // caso: int a; (dichiarazione senza inizializzazione)
 	    if(init == null) {
 	        return "";
 	    }

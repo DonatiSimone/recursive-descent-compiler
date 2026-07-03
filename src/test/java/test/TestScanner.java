@@ -1,10 +1,10 @@
 package test;
 
 import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import eccezioni.LexicalException;
 
@@ -21,8 +21,15 @@ class TestScanner {
     LexicalException e;
     String fileName;
 
-    @BeforeEach
-    void setup() throws FileNotFoundException {
+    
+    /*
+     * Crea lo Scanner per il file di test specificato.
+     *
+     * Non è stato utilizzato @BeforeEach perché i test
+     * utilizzano file di input differenti e richiedono
+     * quindi una inizializzazione personalizzata.
+     */
+    private void loadScanner(String fileName) throws FileNotFoundException {
         if (fileName != null) {
             scanner = new Scanner(path + fileName);
         }
@@ -30,8 +37,8 @@ class TestScanner {
 
     @Test
     void testCaratteriNonAmmessi() throws FileNotFoundException, LexicalException {
-        fileName = "caratteriNonCaratteri.txt";
-        setup();
+
+        loadScanner("caratteriNonCaratteri.txt");
         
         e = Assertions.assertThrows(LexicalException.class, () -> scanner.nextToken());
         assertEquals("LexicalException a riga: 1, carattere illegale: ^", e.getMessage());
@@ -46,8 +53,8 @@ class TestScanner {
     
     @Test
     void testErroriNumbers() throws FileNotFoundException, LexicalException {
-        fileName = "erroriNumbers.txt";
-        setup();
+    	
+        loadScanner("erroriNumbers.txt");
         
     	assertEquals(TokenType.INT, scanner.nextToken().getType());
     	assertEquals(TokenType.INT, scanner.nextToken().getType());
@@ -64,24 +71,24 @@ class TestScanner {
 
     @Test
     void testCaratteriSkip() throws FileNotFoundException, LexicalException {
-        fileName = "caratteriSkip";
-        setup();
+    	
+        loadScanner("caratteriSkip.txt");
         
     	assertEquals(TokenType.EOF, scanner.nextToken().getType());
     }
 
     @Test
     void testEOF() throws FileNotFoundException, LexicalException {
-        fileName = "testEOF.txt";
-        setup();
+    	
+    	loadScanner("testEOF.txt");
         
     	assertEquals(TokenType.EOF, scanner.nextToken().getType());
     }
 
     @Test
     void testFloat() throws FileNotFoundException, LexicalException{
-        fileName = "testFloat.txt";
-        setup();
+    	
+    	loadScanner("testFloat.txt");
         
     	assertEquals(TokenType.FLOAT, scanner.nextToken().getType());
     	assertEquals(TokenType.FLOAT, scanner.nextToken().getType());
@@ -91,8 +98,8 @@ class TestScanner {
 
     @Test
     void testGenerale() throws FileNotFoundException, LexicalException {
-        fileName = "testGenerale.txt";
-        setup();
+    	
+    	loadScanner("testGenerale.txt");
 
         assertEquals("TYINT, riga: 1", scanner.nextToken().toString());
         assertEquals("ID, riga: 1, valore: temp", scanner.nextToken().toString());
@@ -127,8 +134,8 @@ class TestScanner {
 
     @Test
     void testId() throws FileNotFoundException, LexicalException {
-        fileName = "testId.txt";
-        setup();
+    	
+    	loadScanner("testId.txt");
         
     	assertEquals(TokenType.ID, scanner.nextToken().getType());
     	assertEquals(TokenType.ID, scanner.nextToken().getType());
@@ -138,8 +145,8 @@ class TestScanner {
 
     @Test
     void testIdKeyWords() throws FileNotFoundException, LexicalException {
-        fileName = "testIdKeywords.txt";
-        setup();
+    	
+    	loadScanner("testIdKeywords.txt");
 
 
         assertEquals(TokenType.TYINT, scanner.nextToken().getType());
@@ -161,9 +168,9 @@ class TestScanner {
 
     @Test 
     void testInt() throws FileNotFoundException, LexicalException {
-        fileName = "testInt.txt";
-        setup();
-        
+    	
+    	loadScanner("testInt.txt");
+
     	assertEquals(TokenType.INT, scanner.nextToken().getType());
     	assertEquals(TokenType.INT, scanner.nextToken().getType());
     	assertEquals(TokenType.INT, scanner.nextToken().getType());
@@ -172,8 +179,8 @@ class TestScanner {
 
     @Test 
     void testKeywords() throws FileNotFoundException, LexicalException {
-        fileName = "testKeywords.txt";
-        setup();
+    	
+    	loadScanner("testKeywords.txt");
 
         assertEquals(TokenType.PRINT, scanner.nextToken().getType());
         assertEquals(TokenType.TYFLOAT, scanner.nextToken().getType());
@@ -184,8 +191,8 @@ class TestScanner {
 
     @Test
     void testOpsDels() throws FileNotFoundException, LexicalException {
-        fileName = "testOpsDels.txt";
-        setup();
+    	
+    	loadScanner("testOpsDels.txt");
 
         assertEquals(TokenType.PLUS, scanner.nextToken().getType());
         assertEquals(TokenType.OP_ASSIGN, scanner.nextToken().getType());
@@ -211,8 +218,8 @@ class TestScanner {
     
     @Test
     void peekToken() throws FileNotFoundException, LexicalException {
-        fileName = "testGenerale.txt";
-        setup();
+    	
+    	loadScanner("testGenerale.txt");
         
     	assertEquals(scanner.peekToken().getType(), TokenType.TYINT );
     	assertEquals(scanner.nextToken().getType(), TokenType.TYINT );

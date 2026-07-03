@@ -63,7 +63,19 @@ public class NodeBinOp extends NodeExpr {
         if(rightTD.getTipo() == TipoTD.ERROR) {
             return rightTD;
         }
+        
+        
+        // se è una divisione con almeno un float,
+        // promuovi l'operatore a DIV_FLOAT
+        
+        if(op == LangOper.DIV &&
+     		   (leftTD.getTipo() == TipoTD.FLOAT ||
+     		    rightTD.getTipo() == TipoTD.FLOAT)) {
 
+     		    op = LangOper.DIV_FLOAT;
+        }
+
+        
         // float prevale
 
         if(leftTD.getTipo() == TipoTD.FLOAT ||
@@ -72,7 +84,9 @@ public class NodeBinOp extends NodeExpr {
             return new TypeDescriptor(TipoTD.FLOAT);
         }
 
+
         return new TypeDescriptor(TipoTD.INT);
+        
     }
 
     @Override

@@ -222,6 +222,10 @@ public class Scanner {
 
 			char c = peekChar();
 
+			/*
+			 * È consentito un solo punto
+			 * decimale all'interno del numero.
+			 */
         	if (c == '.') {
         	    if (contieneDecimale) {
         	        while (digits.contains(peekChar()) || letters.contains(peekChar()) || peekChar() == '.') {
@@ -237,6 +241,7 @@ public class Scanner {
         if (contieneDecimale) {
             if (countDecimali == 5) {
                 // lancia errore se troppe cifre decimali (>5)
+            	// il ciclo while mi serve a consumare tutto il token nel caso in cui fosse errato, 123.232423 or 123.123123kdjsa
                 while (digits.contains(peekChar()) || letters.contains(peekChar()) || peekChar() == '.') {
                     number += readChar();
                 }

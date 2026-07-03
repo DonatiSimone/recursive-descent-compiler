@@ -11,14 +11,14 @@ public class Token {
     private int riga;
     private String value;
 
-    // costruttore per token senza valore (es: PLUS, INT, EOF)
+    // costruttore per token senza valore (es: PLUS, TYINT, EOF)
     public Token(TokenType type, int riga) {
         this.type = type;
         this.riga = riga;
         this.value = null;
     }
 
-    // costruttore per token con valore (ID, NUM)
+    // costruttore per token con valore (ID, INT, FLOAT)
     public Token(TokenType type, int riga, String value) {
         this.type = type;
         this.riga = riga;

@@ -1,17 +1,17 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.FileNotFoundException;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ast.NodeProgram;
-import eccezioni.SyntacticException;
-import parser.Parser;
 import scanner.Scanner;
+import parser.Parser;
+import eccezioni.SyntacticException;
 
 class TestParser {
 	

@@ -48,7 +48,8 @@ public class TypeDescriptor {
      * Regole:
      * - ERROR non è compatibile con nessun tipo
      * - tipi uguali sono compatibili
-     * - INT è compatibile con FLOAT
+     * - un valore INT può essere utilizzato
+     *   dove è richiesto un FLOAT
      */
     public boolean compatible(TypeDescriptor td) {
 

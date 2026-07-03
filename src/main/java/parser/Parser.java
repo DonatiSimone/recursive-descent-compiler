@@ -13,7 +13,7 @@ import scanner.Scanner;
 /*
  * Parser ricorsivo discendente LL(1)
  * 
- * Riceve token dallo scanner e costruisce l'AST
+ * Riceve token dallo Scanner e costruisce l'AST
  * 
  * Ogni metodo parse implementa una regola grammaticale
  */
@@ -392,6 +392,11 @@ public class Parser {
 
 	            String op = match(TokenType.OP_ASSIGN).getValue();
 
+	            /*
+	             * Gli operatori di assegnamento composto
+	             * vengono convertiti nel corrispondente
+	             * operatore aritmetico.
+	             */
 	            return switch(op) {
 	                case "+=" -> LangOper.PLUS;
 	                case "-=" -> LangOper.MINUS;

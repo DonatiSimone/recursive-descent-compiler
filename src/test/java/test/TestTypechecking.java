@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ast.NodeProgram;
@@ -18,9 +19,13 @@ public class TestTypechecking {
 	
 	final String path = "src/test/data/testTypeChecking/";
 	
+    @BeforeEach
+    void setup() {
+        SymbolTable.init();
+    }
+	
 	@Test
 	void testDicRipetute() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
 
 	    Scanner scanner =
 	        new Scanner(path + "1_dicRipetute.txt");
@@ -31,8 +36,7 @@ public class TestTypechecking {
 
 	    TypeDescriptor td =
 	        program.calcResType();
-	    
-	    //System.out.print(td.getMsg());
+
 	    
 	    assertEquals(TipoTD.ERROR, td.getTipo());    
 	    assertEquals("Variabile a già dichiarata", td.getMsg());
@@ -40,7 +44,6 @@ public class TestTypechecking {
 	
 	@Test
 	void testIdNonDec() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
 
 	    Scanner scanner =
 	        new Scanner(path + "2_idNonDec.txt");
@@ -48,11 +51,10 @@ public class TestTypechecking {
 	    Parser parser = new Parser(scanner);
 
 	    NodeProgram program = parser.parse();
-
+	    
 	    TypeDescriptor td =
 	        program.calcResType();
-	    
-	    //System.out.print(td.getMsg());
+
 	    
 	    assertEquals(TipoTD.ERROR, td.getTipo());    
 	    assertEquals("Variabile b non dichiarata", td.getMsg());
@@ -60,19 +62,16 @@ public class TestTypechecking {
 	
 	@Test
 	void testIdNonDec2() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
 
 	    Scanner scanner =
-	        new Scanner(path + "3_idNonDec");
+	        new Scanner(path + "3_idNonDec.txt");
 
 	    Parser parser = new Parser(scanner);
 
 	    NodeProgram program = parser.parse();
 
 	    TypeDescriptor td =
-	        program.calcResType();
-	    
-	    //System.out.print(td.getMsg());
+	        program.calcResType();	    
 	    
 	    assertEquals(TipoTD.ERROR, td.getTipo());    
 	    assertEquals("Variabile c non dichiarata", td.getMsg());
@@ -80,7 +79,6 @@ public class TestTypechecking {
 	
 	@Test
 	void testIdNonComp() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
 
 	    Scanner scanner =
 	        new Scanner(path + "4_tipoNonCompatibile.txt");
@@ -91,19 +89,17 @@ public class TestTypechecking {
 
 	    TypeDescriptor td =
 	        program.calcResType();
-	    
-	    //System.out.print(td.getMsg());
+
 	    
 	    assertEquals(TipoTD.ERROR, td.getTipo());    
 	    assertEquals("Assegnamento incompatibile", td.getMsg());
 	}
 	
 	@Test
-	void testCorretto1() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
+	void testInitNonCompatibile() throws FileNotFoundException, SyntacticException {
 
 	    Scanner scanner =
-	        new Scanner(path + "5_corretto.txt");
+	        new Scanner(path + "5_initNonCompatibile.txt");
 
 	    Parser parser = new Parser(scanner);
 
@@ -111,13 +107,13 @@ public class TestTypechecking {
 
 	    TypeDescriptor td =
 	        program.calcResType();
-	    
-	    assertEquals(TipoTD.OK, td.getTipo());
+
+	    assertEquals(TipoTD.ERROR, td.getTipo());
+	    assertEquals("Tipo inizializzazione incompatibile",td.getMsg());
 	}
 	
 	@Test
-	void testCorretto2() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
+	void testCorretto1() throws FileNotFoundException, SyntacticException {
 
 	    Scanner scanner =
 	        new Scanner(path + "6_corretto.txt");
@@ -133,11 +129,26 @@ public class TestTypechecking {
 	}
 	
 	@Test
-	void testCorretto3() throws FileNotFoundException, SyntacticException {
-	    SymbolTable.init();
+	void testCorretto2() throws FileNotFoundException, SyntacticException {
 
 	    Scanner scanner =
 	        new Scanner(path + "7_corretto.txt");
+
+	    Parser parser = new Parser(scanner);
+	    
+	    NodeProgram program = parser.parse();
+
+	    TypeDescriptor td =
+	        program.calcResType();
+	    
+	    assertEquals(TipoTD.OK, td.getTipo());
+	}
+	
+	@Test
+	void testCorretto3() throws FileNotFoundException, SyntacticException {
+
+	    Scanner scanner =
+	        new Scanner(path + "8_corretto.txt");
 
 	    Parser parser = new Parser(scanner);
 
@@ -148,4 +159,5 @@ public class TestTypechecking {
 	    
 	    assertEquals(TipoTD.OK, td.getTipo());
 	}
+	
 }

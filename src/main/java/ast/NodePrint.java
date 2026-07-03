@@ -44,6 +44,7 @@ public class NodePrint extends NodeStm {
 	    Attributes attr =
 	        SymbolTable.lookup(id.getName());
 
+	    
 	    return "l" +
 	           attr.getRegistro() +
 	           " p P ";
